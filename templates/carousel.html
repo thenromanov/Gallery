@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="carouselHeader">Пейзажи Марса</h1>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width:1280px; height:854px; margin-left:auto; margin-right:auto;">
+        <div class="carousel-inner">
+            {% for filename in filenames %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <img class="d-block w-100" src={{ filename }} alt="First slide" width="1280" height="854">
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <form class="photo-form" action="" method="post" novalidate enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>Добавить картинку<br></p>
+        <p>
+            {{ form.file(class="form-control") }}<br>
+            {% for error in form.file.errors %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}
